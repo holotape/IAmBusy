@@ -1,6 +1,9 @@
-# calendardisplay
-Displays your next meeting from an ICS file on a Waveshare epd2in13_V3 e-Ink display connected to a Raspberry Pi.
-With minor modifications it could run on any waveshare e-Paper screen. Fork it! Fix it!
+# I Am Busy!!!
+Displays your Outlook status on a Waveshare display connected to a Raspberry Pi.
+
+# Everything below this line has not yet been updated from the original project which I am using as a basis for this: https://github.com/holotape/calendardisplay
+
+
 
 Follow these instructions to get your RPi configured first:
 https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT_Manual
