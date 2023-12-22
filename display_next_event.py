@@ -6,6 +6,7 @@ picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__)
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
 if os.path.exists(libdir):
     sys.path.append(libdir)
+
 from icalendar import Calendar
 import pytz
 import requests
@@ -13,6 +14,7 @@ import requests
 from waveshare_OLED import OLED_1in5_rgb
 from PIL import Image, ImageDraw, ImageFont
 
+disp = OLED_1in5_rgb.OLED_1in5_rgb()
 
 def get_next_event(file_path_or_url):
     local_tz = pytz.timezone("America/Toronto")
