@@ -5,7 +5,7 @@ from icalendar import Calendar
 import pytz
 import requests
 
-from waveshare_epd import epd2in13_V3
+from waveshare_OLED import OLED_1in5_rgb
 from PIL import Image, ImageDraw, ImageFont
 
 
@@ -99,23 +99,23 @@ def draw_event_details(draw, event, max_width):
 
 FLIP_DISPLAY = True # Set this to False if you'd like to flip the display rightside-up
 
-def display_next_event(epd, event, full_update=False):
+def display_next_event(oled, event, full_update=False):
             
     # create the image buffer
-    image = Image.new("1", (epd.height, epd.width), 255)
+    image = Image.new("RGB", (oled.width, oled.height), "RED")
     draw = ImageDraw.Draw(image)
 
-    draw_event_details(draw, event, epd.height)
+    draw_event_details(draw, event, oled.height)
 
     # Rotate the image if FLIP_DISPLAY is set to True
     if FLIP_DISPLAY:
         image = image.rotate(180)
 
     # display the image buffer
-    epd.display(epd.getbuffer(image))
+    oled.display(oled.getbuffer(image))
 
     # put the display to sleep
-    epd.sleep()
+    #epd.sleep()
 
 def read_ics_link():
     with open("ics_link.txt", "r") as f:
@@ -124,8 +124,8 @@ def read_ics_link():
 MAX_SLEEP_DURATION = 600 # In seconds, 300 is 5 mins, 600 is 10, 900 is 15
 
 if __name__ == "__main__":
-    epd = epd2in13_V3.EPD()
-    epd.init()
+    oled = OLED_1in5_rgb()
+    oled.init()
     
     # !!!!! Be sure to open up ics_link_sample.txt and follow the instructions
     file_path = read_ics_link()
@@ -148,7 +148,7 @@ if __name__ == "__main__":
                 perform_full_update = True
                 previous_event = next_event
 
-            display_next_event(epd, next_event, full_update=perform_full_update)
+            display_next_event(oled, next_event, full_update=perform_full_update)
 
             # If the next event has started and we're less than 10 minutes into it, 
             # calculate sleep duration to be 10 minutes after the start of the event
