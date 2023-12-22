@@ -1,12 +1,14 @@
 # I Am Busy!!!
 Displays your Outlook status on a Waveshare OLED display connected to a Raspberry Pi.  The idea is an eye-catching sign that you can mount on or near your desk so that coworkers have a better idea of when you're in a call or just listening to music.
 
-# Everything below this line has not yet been updated from the original project which I am using as a basis for this: https://github.com/holotape/calendardisplay
+
 
 
 
 Follow these instructions to get your RPi configured first:
-https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT_Manual
+https://www.waveshare.com/wiki/1.5inch_RGB_OLED_Module
+
+# Everything below this line has not yet been updated from the original project which I am using as a basis for this: https://github.com/holotape/calendardisplay
 
 Too long, don't want to read?
 Do this.
