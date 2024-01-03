@@ -3,8 +3,8 @@
 
 import sys
 import os
-picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
-libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
+picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pic')
+libdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
 if os.path.exists(libdir):
     sys.path.append(libdir)
 
@@ -14,6 +14,16 @@ import traceback
 from waveshare_OLED import OLED_1in5_rgb
 from PIL import Image,ImageDraw,ImageFont
 logging.basicConfig(level=logging.DEBUG)
+
+font_path = os.path.join(picdir, 'Font.ttc')
+bmp_path = os.path.join(picdir, '1in5_rgb.bmp')
+logging.info(f"Checking if font exists at: {font_path}")
+logging.info(f"Checking if bmp exists at: {bmp_path}")
+if not os.path.exists(font_path):
+    logging.error(f"Font file not found at: {font_path}")
+if not os.path.exists(bmp_path):
+    logging.error(f"BMP file not found at: {bmp_path}")
+
 
 try:
     disp = OLED_1in5_rgb.OLED_1in5_rgb()

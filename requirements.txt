@@ -1,4 +1,4 @@
 icalendar==5.0.10
 pytz==2023.3
-RPi.GPIO==0.7.0
+RPi.GPIO==0.7.1
 spidev==3.5
