@@ -56,13 +56,13 @@ def get_current_event_status(file_path_or_url):
         if event_start <= now <= event_end:
             summary = str(event.get('summary'))
             if "Focus" in summary:
-                return "Do Not Disturb", "red"
+                return "Do Not Disturb  - ", "red"
             elif "Lunch" in summary:
-                return "Out to Lunch (Not figuratively)", "yellow"
+                return "Out to Lunch  -", "yellow"
             elif "WFH" in summary:
-                return "Working Elsewhere", "blue"
+                return "Working Elsewhere  -", "blue"
             else:
-                return "Do Not Disturb", "red"  # Default for any other event
+                return "Do Not Disturb  -", "red"  # Default for any other event
 
     return "", None  # No event - blank screen
 
@@ -83,13 +83,45 @@ color_map = {
     "blue": (10, 10, 255),
 }
 
+def display_scrolling_status(status, color, scroll_delay=0.001):
+    if not status:
+        oled.clear()
+        return
+
+    font = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
+    text_width, text_height = font.getsize(status)
+    image_width, image_height = oled.width, oled.height
+
+    start_offset = 300
+    text_x = image_width - start_offset  # Start text on the right side of the screen
+    text_y = image_height - text_height  # Position text at the bottom of the screen
+
+    restart_x = image_width - font.getsize("-")[0]  # when to restart
+
+    while True:
+        image = Image.new('RGB', (image_width, image_height), 'BLACK')
+        draw = ImageDraw.Draw(image)
+
+        text_color = color_map.get(color, 'WHITE')
+        draw.text((text_x, text_y), status, font=font, fill=text_color)
+        oled.ShowImage(oled.getbuffer(image))
+
+        # Check if it's time to restart the message
+        if text_x + text_width < restart_x:
+            text_x = image_width
+        else:
+            text_x -= 10  # Move the text to the left
+
+        time.sleep(scroll_delay)
+
+
 if __name__ == '__main__':
     while True:
         file_path_or_url = read_ics_link()
         status, color = get_current_event_status(file_path_or_url)
-        display_status(status, color)
+        long_status = (status + "  ") * 10
+        display_scrolling_status(long_status, color)
         time.sleep(120)  # Wait 2 minutes before next check
-
 
 def wrap_text(text, font, max_width):
     lines = []
