@@ -64,14 +64,14 @@ def get_current_event_status(file_path_or_url):
             else:
                 return "Do Not Disturb", "red"  # Default for any other event
 
-    return "", None  # Indicates no event, so screen should be blank
+    return "", None  # No event - blank screen
 
 def display_status(status, color):
     if status:  # Only display if there is a status
         image = Image.new('RGB', (oled.width, oled.height), 'BLACK')
         draw = ImageDraw.Draw(image)
         font = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
-        text_color = color_map.get(color, 'WHITE')  # Get the color or default to white
+        text_color = color_map.get(color, 'WHITE')  # Get the colour or default to white
         draw.text((0, 0), status, font=font, fill=text_color)
         oled.ShowImage(oled.getbuffer(image))
     else:
@@ -81,7 +81,6 @@ color_map = {
     "red": (255, 10, 10),
     "yellow": (255, 255, 0),
     "blue": (10, 10, 255),
-    # Add more colors as needed
 }
 
 if __name__ == '__main__':
@@ -89,7 +88,7 @@ if __name__ == '__main__':
         file_path_or_url = read_ics_link()
         status, color = get_current_event_status(file_path_or_url)
         display_status(status, color)
-        time.sleep(300)  # Wait for 5 minutes before next check
+        time.sleep(120)  # Wait 2 minutes before next check
 
 
 def wrap_text(text, font, max_width):
@@ -117,7 +116,7 @@ def display_status(status, color=None):
         draw = ImageDraw.Draw(image)
         font = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
 
-        # Determine text color
+        # Determine text colour
         text_color = color_map.get(color, 'WHITE')
 
         # Wrap text
@@ -137,4 +136,4 @@ if __name__ == '__main__':
         file_path_or_url = read_ics_link()
         status, color = get_current_event_status(file_path_or_url)
         display_status(status, color)
-        time.sleep(300)  # Wait for 5 minutes before next check
+        time.sleep(300)  # Wait 5 minutes before next check
